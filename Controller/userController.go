@@ -11,7 +11,6 @@ import (
 
 	database "github.com/AkbarFikri/signconnect_backend/Database"
 	models "github.com/AkbarFikri/signconnect_backend/Models"
-
 )
 
 func Signup(c *gin.Context) {
@@ -30,6 +29,29 @@ func Signup(c *gin.Context) {
 	}
 
 	// Hash Password user
+	hashed, err := bcrypt.GenerateFromPassword([]byte(body.Password), 10)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"error": "Failed to Hash Password",
+		})
+		return
+	}
+
+	//Create The User
+	user := models.User{Username: body.Username, Email: body.Email, Password: string(hashed)}
+	result := database.DB.Create(&user)
+	if result.Error != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": "Failed to Create User",
+		})
+		return
+	}
+
+	// Respond send
+	c.JSON(http.StatusOK, map[string]interface{}{
+		"id":      user.ID,
+		"massage": "Success Creat New User",
+	})
 
 }
 
@@ -86,7 +108,7 @@ func Signin(c *gin.Context) {
 
 	// return token
 	c.JSON(http.StatusOK, gin.H{
-		"id":      user.ID,
-		"token":   tokenString,
+		"id":    user.ID,
+		"token": tokenString,
 	})
 }

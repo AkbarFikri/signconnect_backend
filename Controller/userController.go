@@ -11,6 +11,7 @@ import (
 
 	database "github.com/AkbarFikri/signconnect_backend/Database"
 	models "github.com/AkbarFikri/signconnect_backend/Models"
+
 )
 
 func Signup(c *gin.Context) {
@@ -87,6 +88,5 @@ func Signin(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"id":      user.ID,
 		"token":   tokenString,
-		"massage": "Success Login",
 	})
 }

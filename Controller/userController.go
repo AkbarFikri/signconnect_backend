@@ -9,7 +9,7 @@ import (
 	"github.com/golang-jwt/jwt/v5"
 	"golang.org/x/crypto/bcrypt"
 
-	connections "github.com/AkbarFikri/signconnect_backend/Connections"
+	database "github.com/AkbarFikri/signconnect_backend/Database"
 	models "github.com/AkbarFikri/signconnect_backend/Models"
 )
 
@@ -29,29 +29,7 @@ func Signup(c *gin.Context) {
 	}
 
 	// Hash Password user
-	hashed, err := bcrypt.GenerateFromPassword([]byte(body.Password), 10)
-	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{
-			"error": "Failed to Hash Password",
-		})
-		return
-	}
 
-	//Create The User
-	user := models.User{Username: body.Username, Email: body.Email, Password: string(hashed)}
-	result := connections.DB.Create(&user)
-	if result.Error != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"error": "Failed to Create User",
-		})
-		return
-	}
-
-	// Respond send
-	c.JSON(http.StatusOK, map[string]interface{}{
-		"id":      user.ID,
-		"massage": "Success Creat New User",
-	})
 }
 
 func Signin(c *gin.Context) {
@@ -70,7 +48,7 @@ func Signin(c *gin.Context) {
 
 	// check Email request
 	var user models.User
-	connections.DB.First(&user, "email = ?", body.Email)
+	database.DB.First(&user, "email = ?", body.Email)
 
 	if user.ID == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{

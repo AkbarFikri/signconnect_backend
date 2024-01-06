@@ -8,7 +8,7 @@ type User struct {
     Username    string  `gorm:"type:varchar(255)"` `json:username`
     Email       string  `gorm:"unique:type:varchar(255)"` `json:email`
     Password    string  `gorm:"type:text"` `json:password`
-    Role        string  `gorm:"type:varchar(20)"` `json:role`
+    Role        string  `gorm:"default:"user":type:varchar(20)"` `json:role`
     Level       int     `gorm:"default:1:type:int"``json:level`
     Leveling    []models.Leveling `gorm:"manytomany"`
     Experience  int     `gorm:"type:int"` `json:experience`

@@ -161,7 +161,7 @@
         "correct_ans" : {"image_url"}
     },
     {
-        "id" : 1,
+        "id" : 2,
         "level" : 1,
         "questions_image" : {"image_url"},
         "questions" : "Gambar diatas merepresentasikan huruf alfabet apa?",
@@ -172,7 +172,7 @@
         "correct_ans" : "A"
     },
     {
-        "id" : 1,
+        "id" : 3,
         "level" : 1,
         "questions_image" : null,
         "questions" : "Gambar yang benar untuk huruf \"C\" pada bahasa isyarat adalah...",

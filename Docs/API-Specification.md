@@ -153,17 +153,17 @@
         "id" : 1,
         "level" : 1,
         "questions_image" : null,
-        "questions" : "Gambar yang benar untuk huruf "A" pada bahasa isyarat adalah...",
-        "ans1" : {image_url},
-        "ans2" : {image_url},
-        "ans3" : {image_url},
-        "ans4" : {image_url},
-        "correct_ans" : {image_url}
+        "questions" : "Gambar yang benar untuk huruf \"A\" pada bahasa isyarat adalah...",
+        "ans1" : {"image_url"},
+        "ans2" : {"image_url"},
+        "ans3" : {"image_url"},
+        "ans4" : {"image_url"},
+        "correct_ans" : {"image_url"}
     },
     {
         "id" : 1,
         "level" : 1,
-        "questions_image" : {image_url},
+        "questions_image" : {"image_url"},
         "questions" : "Gambar diatas merepresentasikan huruf alfabet apa?",
         "ans1" : "S",
         "ans2" : "A",
@@ -175,12 +175,12 @@
         "id" : 1,
         "level" : 1,
         "questions_image" : null,
-        "questions" : "Gambar yang benar untuk huruf "C" pada bahasa isyarat adalah...",
-        "ans1" : {image_url},
-        "ans2" : {image_url},
-        "ans3" : {image_url},
-        "ans4" : {image_url},
-        "correct_ans" : {image_url}
+        "questions" : "Gambar yang benar untuk huruf \"C\" pada bahasa isyarat adalah...",
+        "ans1" : {"image_url"},
+        "ans2" : {"image_url"},
+        "ans3" : {"image_url"},
+        "ans4" : {"image_url"},
+        "correct_ans" : {"image_url"}
     },
     ... (10 Questions Respond)
   ]
@@ -202,8 +202,8 @@
   "user_answer" : [
     {
         "id" : 1,
-        "user_ans" : {image_url},
-        "correct_ans" : {image_url}
+        "user_ans" : {"image_url"},
+        "correct_ans" : {"image_url"}
     },
     {
         "id" : 2,
@@ -212,8 +212,8 @@
     },
     {
         "id" : 3,
-        "user_ans" : {image_url},
-        "correct_ans" : {image_url}
+        "user_ans" : {"image_url"},
+        "correct_ans" : {"image_url"}
     },
   ]
 }
@@ -326,7 +326,7 @@
       "id": 1,
       "kategori_id": "1",
       "huruf": "A",
-      "image_url" : {image_url}
+      "image_url" : {"image_url"}
     },
   ]
 }
@@ -355,7 +355,7 @@
       "id": 1,
       "kategori_id": "1",
       "huruf": "A",
-      "image_url" : {image_url}
+      "image_url" : {"image_url"}
     },
   ]
 }
@@ -384,21 +384,21 @@
       "id": 1,
       "nama": "Pusat Layanan Juru Bahasa Isyarat",
       "lokasi": "Malang, Jawa Timur",
-      "lembaga_image_url" : {image_url},
+      "lembaga_image_url" : {"image_url"},
       "minimal_tahun" : 1
     },
     {
       "id": 2,
       "nama": "Pusat Bahasa Isyarat Indonesia",
       "lokasi": "Malang, Jawa Timur",
-      "lembaga_image_url" : {image_url},
+      "lembaga_image_url" : {"image_url"},
       "minimal_tahun" : 1
     },
     {
       "id": 3,
       "nama": "Akar Tuli Malang",
       "lokasi": "Malang, Jawa Timur",
-      "lembaga_image_url" : {image_url},
+      "lembaga_image_url" : {"image_url"},
       "minimal_tahun" : 0
     },
   ]
@@ -427,7 +427,7 @@
       "id": 1,
       "nama": "Pusat Layanan Juru Bahasa Isyarat",
       "lokasi": "Malang, Jawa Timur",
-      "lembaga_image_url" : {image_url},
+      "lembaga_image_url" : {"image_url"},
       "minimal_tahun" : 1,
       "tentang_lembaga" : "text....",
       "deskripsi_pekerjaan" : "text....",
@@ -449,9 +449,9 @@
 ```json
 {
     "data" : {
-        "cv_url" : {url},
-        "username" : {user.username},
-        "email" : {user.email},
+        "cv_url" : {"url"},
+        "username" : {"user.username"},
+        "email" : {"user.email"},
         "lembaga_id" : 1
     }
 }

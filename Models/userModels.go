@@ -4,7 +4,8 @@ import "gorm.io/gorm"
 
 type User struct {
 	gorm.Model
-	Username string `gorm:"type:varchar(100)" json:"username"`
-	Email    string `gorm:"uniqe" json:"email"`
-	Password string `json:"password"`
+	Username   string `json:"username"`
+	Email      string `json:"email"`
+	Password   string `json:"password"`
+	Experience int    `json:"experience"`
 }

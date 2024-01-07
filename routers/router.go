@@ -6,7 +6,6 @@ import (
 	"github.com/gin-gonic/gin"
 
 	controller "github.com/AkbarFikri/signconnect_backend/Controller"
-
 )
 
 func UserRoutes(route *gin.RouterGroup) {
@@ -19,7 +18,7 @@ func UserRoutes(route *gin.RouterGroup) {
 }
 
 func AuthRoutes(route *gin.RouterGroup) {
-	route.GET("testing", func(ctx *gin.Context) {
+	route.GET("/auth", func(ctx *gin.Context) {
 		ctx.JSON(http.StatusOK, gin.H{"status": http.StatusOK, "message": "Gooddd"})
 	})
 	route.POST("/signup", controller.Signup)
@@ -27,7 +26,12 @@ func AuthRoutes(route *gin.RouterGroup) {
 }
 
 func LeaderboardRoutes(route *gin.RouterGroup) {
-	route.GET("/", func(ctx *gin.Context) {
+	route.GET("/", controller.GetLeaderboard)
+	route.GET("/:limit", controller.GetLeaderboard)
+}
+
+func GamesRoutes(route *gin.RouterGroup) {
+	route.GET("/games", func(ctx *gin.Context) {
 		ctx.JSON(http.StatusOK, gin.H{"status": http.StatusOK, "message": "Gooddd"})
 	})
 }

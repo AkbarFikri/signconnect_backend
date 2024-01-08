@@ -6,13 +6,11 @@
 type User struct {
     gorm.model()
     Username    string  `gorm:"type:varchar(255)"` `json:username`
-    Email       string  `gorm:"unique:type:varchar(255)"` `json:email`
+    Email       string  `gorm:"unique;type:varchar(255)"` `json:email`
     Password    string  `gorm:"type:text"` `json:password`
-    Role        string  `gorm:"default:"user":type:varchar(20)"` `json:role`
-    Level       int     `gorm:"default:1:type:int"``json:level`
-    Leveling    []models.Leveling `gorm:"manytomany"`
-    Experience  int     `gorm:"type:int"` `json:experience`
-
+    Role        *UserRole
+    Leveling    []models.Leveling `gorm:"onetomany"`
+    Leaderboard *Leaderboard
 }
 ```
 
@@ -20,7 +18,7 @@ type User struct {
 
 ```golang
 type Soal struct {
-    Id              int     `gorm:"primaryKey:type:int"`
+    Id              int     `gorm:"primaryKey;type:int"`
     QuestionImg_url string  `gorm:"type:varchar(511)"`
     Question        string  `gorm:"type:text"`
     answer_1        string  `gorm:"type:varchar(511)"`
@@ -39,7 +37,7 @@ type Leveling struct {
     Id             int     `gorm:"primaryKey"`
     Level          int     `gorm:"type:int"`
     UserId         int
-    User           User    `gorm:"foreignKey:CompanyRefer"`
+    User           User    `gorm:"foreignKey:UserId"`
     Status         string  `gorm:"type:varchar(15)"`
 }
 ```
@@ -56,5 +54,32 @@ type Lembaga struct {
     Persyaratan    string  `gorm:"type:text"`
     image_url      string  `gorm:"type:varchar(511)"`
     min_pengalaman int     `gorm:"type:int"`
+    Translator     []UserRole `gorm:"onetomany"`
+}
+```
+
+## Table Leaderboard
+
+```golang
+type Leaderboard struct {
+    Id          uint    `gorm:"primaryKey"`
+    UserId      int
+    User        User    `gorm:"foreignKey:UserId"`
+    Experience  int     `gorm:"type:int;default:0"`
+    CreatedAt   time.Time
+    UpdatedAt   time.Time
+}
+```
+
+## Tabel Role
+
+```golang
+type UserRole struct {
+    Id          uint    `gorm:"primaryKey"`
+    UserId      int
+    User        User    `gorm:"foreignKey:UserId"`
+    Experience  int     `gorm:"type:int;default:0"`
+    CreatedAt   time.Time
+    UpdatedAt   time.Time
 }
 ```

@@ -25,11 +25,16 @@ func SetupRoute() *gin.Engine {
 	user := router.Group("/user", middleware.AuthJWTToken)
 	UserRoutes(user)
 
-	leaderboard := router.Group("/leaderboard")
+	leaderboard := router.Group("/leaderboard", middleware.AuthJWTToken)
 	LeaderboardRoutes(leaderboard)
 
-	games := router.Group("/play")
+	games := router.Group("/game", middleware.AuthJWTToken)
 	GamesRoutes(games)
+
+	dictionary := router.Group("/dictionary", middleware.AuthJWTToken)
+	DictionaryRoutes(dictionary)
+
+
 
 	HomeRoutes(router) //routes register
 	return router

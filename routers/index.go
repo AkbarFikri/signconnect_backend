@@ -34,7 +34,8 @@ func SetupRoute() *gin.Engine {
 	dictionary := router.Group("/dictionary", middleware.AuthJWTToken)
 	DictionaryRoutes(dictionary)
 
-
+	lembaga := router.Group("/lembaga", middleware.AuthJWTToken)
+	LembagaRoutes(lembaga)
 
 	HomeRoutes(router) //routes register
 	return router

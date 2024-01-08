@@ -39,3 +39,8 @@ func DictionaryRoutes(route *gin.RouterGroup) {
 	route.GET("/:kategori/list", controller.GetDictionaryListByKategori)
 	route.GET("/:kategori/:id", controller.GetDictionaryValueByKategoriAndID)
 }
+
+func LembagaRoutes(route *gin.RouterGroup) {
+	route.GET("/", controller.GetDaftarLembaga)
+	route.GET("/:id", controller.GetDetailLembaga)
+}

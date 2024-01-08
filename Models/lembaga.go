@@ -11,3 +11,13 @@ type Lembaga struct {
 	Min_pengalaman int        `gorm:"type:int"`
 	Translator     []UserRole `gorm:"onetomany"`
 }
+
+type Application struct {
+	ID        int    `gorm:"primaryKey"`
+	CvURL     string `gorm:"type:varchar(511)"`
+	Username  string `gorm:"type:varchar(255)"`
+	Email     string `gorm:"type:varchar(255)"`
+	LembagaID int    `gorm:"type:int"`
+	UserID    int    `gorm:"type:int"` // Foreign key to User model
+	User      User   `gorm:"foreignKey:UserID"`
+}

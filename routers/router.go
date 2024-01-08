@@ -43,4 +43,5 @@ func DictionaryRoutes(route *gin.RouterGroup) {
 func LembagaRoutes(route *gin.RouterGroup) {
 	route.GET("/", controller.GetDaftarLembaga)
 	route.GET("/:id", controller.GetDetailLembaga)
+	route.POST("/lembaga/:id", controller.SendVolunteerApplication)
 }

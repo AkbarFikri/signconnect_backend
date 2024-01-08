@@ -71,3 +71,51 @@ func GetDetailLembaga(c *gin.Context) {
 		})
 	}
 }
+
+func SendVolunteerApplication(c *gin.Context) {
+	idStr := c.Param("id")
+
+	if idStr != "" {
+		id, err := strconv.Atoi(idStr)
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"error": "Invalid lembaga ID parameter",
+			})
+			return
+		}
+
+		var lembaga models.Lembaga
+		result := database.DB.First(&lembaga, id)
+		if result.Error != nil {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"error": "Lembaga not found",
+			})
+			return
+		}
+
+		var applicationData struct {
+			CvURL     string `json:"cv_url"`
+			Username  string `json:"username"`
+			Email     string `json:"email"`
+			LembagaID int    `json:"lembaga_id"`
+		}
+
+		if err := c.BindJSON(&applicationData); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"error": "Invalid request body",
+			})
+			return
+		}
+
+		c.JSON(http.StatusOK, gin.H{
+			"result": gin.H{
+				"lembaga_id": lembaga.Id,
+				"message":    "Success Mengirimkan Lamaran",
+			},
+		})
+	} else {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": "Invalid lembaga ID parameter",
+		})
+	}
+}

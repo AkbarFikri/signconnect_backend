@@ -11,7 +11,6 @@ func Migrate() {
 	DB.AutoMigrate(&models.Leveling{})
 	DB.AutoMigrate(&models.Lembaga{})
 	DB.AutoMigrate(&models.UserRole{})
-	DB.AutoMigrate(&models.Answer{})
 	DB.AutoMigrate(&models.Dictionary{})
 	DB.AutoMigrate(&models.Application{})
 	DB.AutoMigrate(&models.DictionaryKategori{})

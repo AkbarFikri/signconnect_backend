@@ -106,3 +106,47 @@ func PostAnswerByLevel(c *gin.Context) {
     }
 }
 
+func AddQuestions(c *gin.Context) {
+	var requestData struct {
+		Soal []struct {
+			ID             uint   `json:"id"`
+			Level          int    `json:"level"`
+			QuestionsImage string `json:"questions_image"`
+			Questions      string `json:"questions"`
+			Answer1        string `json:"answer_1"`
+			Answer2        string `json:"answer_2"`
+			Answer3        string `json:"answer_3"`
+			Answer4        string `json:"answer_4"`
+			CorrectAns     string `json:"correct_ans"`
+		} `json:"soal"`
+	}
+
+	if err := c.ShouldBindJSON(&requestData); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body"})
+		return
+	}
+
+	// Process the questions and save them to the database
+	for _, questionData := range requestData.Soal {
+		question := models.Soal{
+			Id:              questionData.ID,
+			QuestionImg_url: questionData.QuestionsImage,
+			Question:        questionData.Questions,
+			Answer_1:        questionData.Answer1,
+			Answer_2:        questionData.Answer2,
+			Answer_3:        questionData.Answer3,
+			Answer_4:        questionData.Answer4,
+			Correct_answer:  questionData.CorrectAns,
+			Level:           questionData.Level,
+		}
+
+		if err := database.DB.Create(&question).Error; err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to save questions"})
+			return
+		}
+	}
+
+	c.JSON(http.StatusOK, gin.H{"result": strconv.Itoa(len(requestData.Soal)) + " amount of questions have been submitted"})
+}
+
+

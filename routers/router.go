@@ -28,6 +28,7 @@ func LeaderboardRoutes(route *gin.RouterGroup) {
 func GamesRoutes(route *gin.RouterGroup) {
 	route.GET("/questions/:level", controller.GetQuestionsByLevel)
 	route.POST("/answer/:level", controller.PostAnswerByLevel)
+	route.POST("/tambahsoal", controller.AddQuestions)
 }
 
 func HomeRoutes(route *gin.Engine) {

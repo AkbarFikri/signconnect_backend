@@ -93,19 +93,59 @@ func SendVolunteerApplication(c *gin.Context) {
 			return
 		}
 
-		var applicationData struct {
-			CvURL     string `json:"cv_url"`
-			Username  string `json:"username"`
-			Email     string `json:"email"`
-			LembagaID int    `json:"lembaga_id"`
+		userObj, exists := c.Get("user")
+		if !exists {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"error": "User information not found",
+			})
+			return
 		}
 
-		if err := c.BindJSON(&applicationData); err != nil {
+		userD, ok := userObj.(models.User)
+		if !ok {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"error": "Invalid user information",
+			})
+			return
+		}
+
+		userID := userD.ID
+		if !exists {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"error": "User information not found",
+			})
+			return
+		}
+
+		var user models.User
+		userResult := database.DB.First(&user, userID)
+		if userResult.Error != nil {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"error": "User not found",
+			})
+			return
+		}
+
+		var requestBody struct {
+			CvURL string `json:"cv_url" binding:"required"`
+		}
+
+		if err := c.ShouldBindJSON(&requestBody); err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{
 				"error": "Invalid request body",
 			})
 			return
 		}
+
+		application := models.Application{
+			CvURL:     requestBody.CvURL,
+			Username:  user.Username,
+			Email:     user.Email,
+			LembagaID: lembaga.Id,
+			UserID:    int(userID),
+		}
+
+		database.DB.Create(&application)
 
 		c.JSON(http.StatusOK, gin.H{
 			"result": gin.H{

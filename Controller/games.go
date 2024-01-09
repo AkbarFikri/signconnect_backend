@@ -50,60 +50,57 @@ func GetQuestionsByLevel(c *gin.Context) {
 }
 
 func PostAnswerByLevel(c *gin.Context) {
-    levelStr := c.Param("level")
+	levelStr := c.Param("level")
 
-    if levelStr != "" {
-        level, err := strconv.Atoi(levelStr)
-        if err != nil {
-            c.JSON(http.StatusBadRequest, gin.H{
-                "error": "Invalid level parameter",
-            })
-            return
-        }
+	if levelStr != "" {
+		level, err := strconv.Atoi(levelStr)
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"error": "Invalid level parameter",
+			})
+			return
+		}
 
-        // Fetch questions based on the level from the database
-        var soals []models.Soal
-        database.DB.Where("level = ?", level).Find(&soals)
+		var soals []models.Soal
+		database.DB.Where("level = ?", level).Find(&soals)
 
-        var requestBody struct {
-            UserAnswer []struct {
-                ID         int    `json:"id"`
-                UserAns    string `json:"user_ans"`
-            } `json:"user_answer"`
-        }
+		var requestBody struct {
+			UserAnswer []struct {
+				ID      int    `json:"id"`
+				UserAns string `json:"user_ans"`
+			} `json:"user_answer"`
+		}
 
-        if err := c.BindJSON(&requestBody); err != nil {
-            c.JSON(http.StatusBadRequest, gin.H{
-                "error": "Invalid request body",
-            })
-            return
-        }
+		if err := c.BindJSON(&requestBody); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"error": "Invalid request body",
+			})
+			return
+		}
 
-        var experienceEarned int
-        for _, answer := range requestBody.UserAnswer {
-            // Find the corresponding question
-            for _, soal := range soals {
-                if answer.ID == int(soal.Id) && answer.UserAns == soal.Correct_answer {
-                    experienceEarned += 10
-                    // Break out of the inner loop once a match is found
-                    break
-                }
-            }
-        }
+		var experienceEarned int
+		for _, answer := range requestBody.UserAnswer {
+			for _, soal := range soals {
+				if answer.ID == int(soal.Id) && answer.UserAns == soal.Correct_answer {
+					experienceEarned += 10
+					break
+				}
+			}
+		}
 
-        result := gin.H{
-            "level":             level,
-            "experience_earned": experienceEarned,
-        }
+		result := gin.H{
+			"level":             level,
+			"experience_earned": experienceEarned,
+		}
 
-        c.JSON(http.StatusOK, gin.H{
-            "result": result,
-        })
-    } else {
-        c.JSON(http.StatusBadRequest, gin.H{
-            "error": "Invalid level parameter",
-        })
-    }
+		c.JSON(http.StatusOK, gin.H{
+			"result": result,
+		})
+	} else {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": "Invalid level parameter",
+		})
+	}
 }
 
 func AddQuestions(c *gin.Context) {
@@ -126,7 +123,6 @@ func AddQuestions(c *gin.Context) {
 		return
 	}
 
-	// Process the questions and save them to the database
 	for _, questionData := range requestData.Soal {
 		question := models.Soal{
 			Id:              questionData.ID,
@@ -148,5 +144,3 @@ func AddQuestions(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{"result": strconv.Itoa(len(requestData.Soal)) + " amount of questions have been submitted"})
 }
-
-

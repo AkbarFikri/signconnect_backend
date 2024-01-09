@@ -13,7 +13,7 @@ type Lembaga struct {
 }
 
 type Application struct {
-	ID        int    `gorm:"primaryKey"`
+	Id        int    `gorm:"primaryKey"`
 	CvURL     string `gorm:"type:varchar(511)"`
 	Username  string `gorm:"type:varchar(255)"`
 	Email     string `gorm:"type:varchar(255)"`

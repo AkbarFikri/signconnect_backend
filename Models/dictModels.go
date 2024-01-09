@@ -5,7 +5,6 @@ type DictionaryKategori struct {
 	Kategori string `json:"kategori"`
 }
 
-// Dictionary represents the dictionary values.
 type Dictionary struct {
 	Id         int    `gorm:"primaryKey"`
 	KategoriID uint   `json:"kategori_id"`

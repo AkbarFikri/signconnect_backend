@@ -10,7 +10,6 @@ import (
 )
 
 func GetLeaderboard(c *gin.Context) {
-	// Default limit if not provided
 	defaultLimit := 10
 
 	limitStr := c.Param("limit")

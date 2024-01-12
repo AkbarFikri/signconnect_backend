@@ -13,6 +13,7 @@ import (
 	models "github.com/AkbarFikri/signconnect_backend/Models"
 )
 
+
 func Signup(c *gin.Context) {
 	// Get the Email and Password user from req body
 	var body struct {
@@ -46,6 +47,19 @@ func Signup(c *gin.Context) {
 		})
 		return
 	}
+
+	leveling := models.Leveling{
+		Level: 1,
+		UserId: int(user.ID),
+		Status: "Ongoing",
+	}
+	database.DB.Create(&leveling)
+
+	leaderboard := models.Leaderboard{
+		UserId:     int(user.ID),
+		Experience: 0,
+	}
+	database.DB.Create(&leaderboard)
 
 	// Respond send
 	c.JSON(http.StatusOK, map[string]interface{}{

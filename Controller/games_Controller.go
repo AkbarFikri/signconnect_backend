@@ -1,6 +1,6 @@
 package controller
 
-import (
+import (	
 	"net/http"
 	"strconv"
 
@@ -88,6 +88,63 @@ func PostAnswerByLevel(c *gin.Context) {
 			}
 		}
 
+		userObj, exists := c.Get("user")
+		if !exists {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"error": "User information not found",
+			})
+			return
+		}
+
+		userD, ok := userObj.(models.User)
+		if !ok {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"error": "Invalid user information",
+			})
+			return
+		}
+
+		userID := userD.ID
+		if !exists {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"error": "User information not found",
+			})
+			return
+		}
+		
+		if len(requestBody.UserAnswer) == len(soals) {
+			var leveling models.Leveling
+			result := database.DB.Where("user_id = ? AND level = ?", userID, level).First(&leveling)
+			if result.Error != nil {
+				c.JSON(http.StatusInternalServerError, gin.H{
+					"error": "Failed to retrieve leveling information",
+				})
+				return
+			}
+
+			database.DB.Model(&leveling).Update("status", "Done")
+
+			nextLevel := level + 1
+			newLeveling := models.Leveling{
+				Level:  nextLevel,
+				UserId: int(userID),
+				Status: "Ongoing",
+			}
+			database.DB.Create(&newLeveling)
+		}
+
+		var leaderboard models.Leaderboard
+		resultLeaderboard := database.DB.Where("user_id = ?", userID).First(&leaderboard)
+		if resultLeaderboard.Error != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"error": "Failed to retrieve leaderboard information",
+			})
+			return
+		}
+
+		database.DB.Model(&leaderboard).Update("experience", leaderboard.Experience+experienceEarned)
+
+
 		result := gin.H{
 			"level":             level,
 			"experience_earned": experienceEarned,
@@ -102,6 +159,7 @@ func PostAnswerByLevel(c *gin.Context) {
 		})
 	}
 }
+
 
 func AddQuestions(c *gin.Context) {
 	var requestData struct {

@@ -12,7 +12,7 @@ type Lembaga struct {
 	Translator     []UserRole `gorm:"onetomany"`
 }
 
-type Application struct {
+type Lamaran struct {
 	Id        int    `gorm:"primaryKey"`
 	CvURL     string `gorm:"type:varchar(511)"`
 	Username  string `gorm:"type:varchar(255)"`

@@ -4,9 +4,10 @@ import (
 	"net/http"
 	"strconv"
 
+	"github.com/gin-gonic/gin"
+
 	database "github.com/AkbarFikri/signconnect_backend/Database"
 	"github.com/AkbarFikri/signconnect_backend/Models"
-	"github.com/gin-gonic/gin"
 )
 
 func GetDaftarLembaga(c *gin.Context) {
@@ -137,7 +138,7 @@ func SendVolunteerApplication(c *gin.Context) {
 			return
 		}
 
-		application := models.Application{
+		application := models.Lamaran{
 			CvURL:     requestBody.CvURL,
 			Username:  user.Username,
 			Email:     user.Email,

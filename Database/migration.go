@@ -2,6 +2,7 @@ package database
 
 import (
 	models "github.com/AkbarFikri/signconnect_backend/Models"
+
 )
 
 func Migrate() {
@@ -12,6 +13,6 @@ func Migrate() {
 	DB.AutoMigrate(&models.Lembaga{})
 	DB.AutoMigrate(&models.UserRole{})
 	DB.AutoMigrate(&models.Dictionary{})
-	DB.AutoMigrate(&models.Application{})
+	DB.AutoMigrate(&models.Lamaran{})
 	DB.AutoMigrate(&models.DictionaryKategori{})
 }

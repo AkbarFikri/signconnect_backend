@@ -3,6 +3,7 @@ package models
 type DictionaryKategori struct {
 	Id       int    `gorm:"primaryKey"`
 	Kategori string `json:"kategori"`
+	ImageURL string
 }
 
 type Dictionary struct {

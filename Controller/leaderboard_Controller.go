@@ -4,9 +4,11 @@ import (
 	"net/http"
 	"strconv"
 
+	"github.com/gin-gonic/gin"
+
 	database "github.com/AkbarFikri/signconnect_backend/Database"
 	models "github.com/AkbarFikri/signconnect_backend/Models"
-	"github.com/gin-gonic/gin"
+
 )
 
 func GetLeaderboard(c *gin.Context) {

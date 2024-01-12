@@ -127,7 +127,7 @@ func PostAnswerByLevel(c *gin.Context) {
 			nextLevel := level + 1
 			newLeveling := models.Leveling{
 				Level:  nextLevel,
-				UserId: int(userID),
+				UserID: int(userID),
 				Status: "Ongoing",
 			}
 			database.DB.Create(&newLeveling)

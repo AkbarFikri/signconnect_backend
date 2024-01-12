@@ -9,7 +9,7 @@ type Lembaga struct {
 	Persyaratan    string     `gorm:"type:text"`
 	Image_url      string     `gorm:"type:varchar(511)"`
 	Min_pengalaman int        `gorm:"type:int"`
-	Translator     []UserRole `gorm:"onetomany"`
+	Translators    []UserRole `gorm:"onetomany"`
 }
 
 type Lamaran struct {

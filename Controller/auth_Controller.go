@@ -11,6 +11,7 @@ import (
 
 	database "github.com/AkbarFikri/signconnect_backend/Database"
 	models "github.com/AkbarFikri/signconnect_backend/Models"
+
 )
 
 
@@ -50,13 +51,13 @@ func Signup(c *gin.Context) {
 
 	leveling := models.Leveling{
 		Level: 1,
-		UserId: int(user.ID),
+		UserID: int(user.ID),
 		Status: "Ongoing",
 	}
 	database.DB.Create(&leveling)
 
 	leaderboard := models.Leaderboard{
-		UserId:     int(user.ID),
+		UserID:     int(user.ID),
 		Experience: 0,
 	}
 	database.DB.Create(&leaderboard)

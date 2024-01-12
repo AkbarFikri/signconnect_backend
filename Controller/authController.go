@@ -50,7 +50,7 @@ func Signup(c *gin.Context) {
 	// Respond send
 	c.JSON(http.StatusOK, map[string]interface{}{
 		"id":      user.ID,
-		"massage": "Success Creat New User",
+		"massage": "Success Create New User",
 	})
 
 }

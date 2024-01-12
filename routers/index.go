@@ -6,7 +6,6 @@ import (
 	"github.com/gin-gonic/gin"
 
 	middleware "github.com/AkbarFikri/signconnect_backend/routers/Middleware"
-
 )
 
 func SetupRoute() *gin.Engine {
@@ -15,7 +14,6 @@ func SetupRoute() *gin.Engine {
 	router.NoRoute(func(ctx *gin.Context) {
 		ctx.JSON(http.StatusNotFound, gin.H{"status": http.StatusNotFound, "message": "Route Not Found"})
 	})
-	// api.signconnect.tech --> api.signconnect.tech/auth/signup
 	router.Use(gin.Logger())
 	router.Use(gin.Recovery())
 	router.Use(middleware.CORSMiddleware())
@@ -27,8 +25,17 @@ func SetupRoute() *gin.Engine {
 	user := router.Group("/user", middleware.AuthJWTToken)
 	UserRoutes(user)
 
-	leaderboard := router.Group("/leaderboard")
+	leaderboard := router.Group("/leaderboard", middleware.AuthJWTToken)
 	LeaderboardRoutes(leaderboard)
+
+	games := router.Group("/game", middleware.AuthJWTToken)
+	GamesRoutes(games)
+
+	dictionary := router.Group("/dictionary", middleware.AuthJWTToken)
+	DictionaryRoutes(dictionary)
+
+	lembaga := router.Group("/lembaga", middleware.AuthJWTToken)
+	LembagaRoutes(lembaga)
 
 	HomeRoutes(router) //routes register
 	return router

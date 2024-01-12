@@ -11,6 +11,7 @@ import (
 
 	database "github.com/AkbarFikri/signconnect_backend/Database"
 	models "github.com/AkbarFikri/signconnect_backend/Models"
+
 )
 
 func AuthJWTToken(c *gin.Context) {
@@ -44,7 +45,7 @@ func AuthJWTToken(c *gin.Context) {
 
 		// Find user with the token
 		var user models.User
-		database.DB.First(&user, claims["sub"])
+		database.DB.Select("id", "username", "email").Preload("leveling").Preload("leaderboard").Preload("role").First(&user, claims["sub"])
 		if user.ID == 0 {
 			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
 				"error": "Please Login First!",
